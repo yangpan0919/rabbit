@@ -12,7 +12,7 @@ public class MQSend {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void send(String message) {
-        rabbitTemplate.convertAndSend("test", "lalala");
+    public void send(String key) {
+        rabbitTemplate.convertAndSend("first_topic_exchange",key, "lalala");
     }
 }

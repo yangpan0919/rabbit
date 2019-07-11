@@ -2,9 +2,7 @@ package com.study.rabbit.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.AcknowledgeMode;
-import org.springframework.amqp.core.Message;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
@@ -41,6 +39,33 @@ public class RabbitmqConfig {
     public Queue helloQueue() {
         return new Queue("queue_test");
     }
+
+    @Bean
+    public TopicExchange topicExchange() {
+        return new TopicExchange("first_topic_exchange", true, false);
+
+    }
+
+    @Bean
+    public Queue firstQueueDirect1() {
+        return QueueBuilder.durable("first_queue_direct1").build();
+    }
+
+    @Bean
+    public Queue firstQueueDirect2() {
+        return QueueBuilder.durable("first_queue_direct2").build();
+    }
+
+//    @Bean
+//    public Binding redirectBinding1() {
+//        return new Binding("first_queue_direct1", Binding.DestinationType.QUEUE, "first_topic_exchange", "goods.update", null);
+//    }
+
+    @Bean
+    public Binding redirectBinding2() {
+        return new Binding("first_queue_direct2", Binding.DestinationType.QUEUE, "first_topic_exchange", "goods.#", null);
+    }
+
 
     /**
      * 定制化amqp模版

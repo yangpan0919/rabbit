@@ -1,9 +1,13 @@
 package com.study.rabbit.componet;
 
+import com.rabbitmq.client.Channel;
 import com.study.rabbit.config.RabbitMQConstant;
 import org.springframework.amqp.core.ExchangeTypes;
+import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 @Component
 public class MQRecv {
@@ -62,5 +66,24 @@ public class MQRecv {
 
     }
 
+    //    @RabbitListener(queues = "first_queue_direct1")
+//    public void receive5(String message) {
+//        System.out.println("收到的 message1 是：" + message);
+//    }
+    @RabbitListener(bindings = {@QueueBinding(value = @Queue(value = "first_queue_direct1"),
+            exchange = @Exchange(value = "first_topic_exchange", type = "topic"), key = "goods.update")
+    })
+    public void receive5(Message message, Channel channel) throws IOException {
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false); //手动应答
+        System.out.println("收到的 message1 是：" + new String(message.getBody()));
+    }
+
+
+    @RabbitListener(queues = "first_queue_direct2")
+    public void receive6(Message message, Channel channel) throws IOException {
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false); //手动应答
+        System.out.println("收到的 message2 是：" + new String(message.getBody()));
+
+    }
 
 }

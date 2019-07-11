@@ -56,7 +56,9 @@ public class DeadQueueConfig {
         // return (DirectExchange)
         // ExchangeBuilder.directExchange("DL_EXCHANGE").durable(true).build();
         return new DirectExchange("DL_EXCHANGE", true, false);
+        //CustomExchange  DirectExchange  FanoutExchange  TopicExchange  HeadersExchange
     }
+
 
     /**
      * 声明一个死信队列. x-dead-letter-exchange 对应 死信交换机 x-dead-letter-routing-key 对应
