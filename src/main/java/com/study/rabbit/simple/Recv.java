@@ -1,14 +1,17 @@
 package com.study.rabbit.simple;
 
 import com.rabbitmq.client.*;
+import com.study.rabbit.config.RabbitMQConstant;
 import com.study.rabbit.util.ConnectionUtils;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 public class Recv {
-    private static final String QUEUE_NAME = "first_simple_queue";
+    private static final String QUEUE_NAME = "192.168.2.221";
 
     public static void main(String[] args) throws IOException, TimeoutException {
         Connection connection = ConnectionUtils.getConnection();
@@ -27,7 +30,10 @@ public class Recv {
          * arguments ：设置队列的一些其它参数。如
          * x-message-ttl,x-expires等。
          */
-        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+        Map<String, Object> arguments = new HashMap<>();
+        //消息超时时间30s
+        arguments.put(RabbitMQConstant.TTL_TIME, 30000);
+        channel.queueDeclare(QUEUE_NAME, false, false, true, arguments);
         DefaultConsumer defaultConsumer = new DefaultConsumer(channel) {
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {

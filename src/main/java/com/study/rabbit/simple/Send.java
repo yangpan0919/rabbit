@@ -14,13 +14,13 @@ import java.util.concurrent.TimeoutException;
  * 队列名称变更，同时变更
  */
 public class Send {
-    private static final String QUEUE_NAME = "first_simple_queue";
+    private static final String QUEUE_NAME = "192.168.2.221";
 
     public static void main(String[] args) throws IOException, TimeoutException {
         Connection connection = ConnectionUtils.getConnection();
         Channel channel = connection.createChannel();
         //创建队列申明
-        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+//        channel.queueDeclare(QUEUE_NAME, false, false, true, null);
         String msg = "hello simple ";
         for (int i = 0; i < 100; i++) {
             String temp = msg + i;

@@ -1,0 +1,22 @@
+RabbitMQ广播：direct模式
+
+消息的广播需要exchange：exchange是一个转发器，其实把消息发给RabbitMQ里的exchange
+
+    fanout: 所有bind到此exchange的queue都可以接收消息，广播
+
+    direct: 通过routingKey和exchange决定的那个唯一的queue可以接收消息
+
+    topic:所有符合routingKey(此时可以是一个表达式)的routingKey所bind的queue可以接收消息
+
+    headers：通过headers来决定把消息发给哪些queue，用的比较少
+
+创建RabbitMQ队列的参数(Arguments)说明：
+    x-message-ttl 发送到队列的消息在丢弃之前可以存活多长时间（毫秒）。
+    x-expires 队列在被自动删除（毫秒）之前可以使用多长时间。
+    x-max-length 队列在开始从头部删除之前可以包含多少就绪消息。
+    x-max-length-bytes 队列在开始从头部删除之前可以包含的就绪消息的总体大小。
+    x-dead-letter-exchange 设置队列溢出行为。这决定了在达到队列的最大长度时消息会发生什么。有效值为drop-head或reject-publish。交换的可选名称，如果消息被拒绝或过期，将重新发布这些名称。
+    x-dead-letter-routing-key 可选的替换路由密钥，用于在消息以字母为单位时使用。如果未设置，将使用消息的原始路由密钥。
+    x-max-priority 队列支持的最大优先级数;如果未设置，队列将不支持消息优先级。
+    x-queue-mode 将队列设置为延迟模式，在磁盘上保留尽可能多的消息以减少内存使用;如果未设置，队列将保留内存缓存以尽快传递消息。
+    x-queue-master-locator 将队列设置为主位置模式，确定在节点集群上声明时队列主机所在的规则。

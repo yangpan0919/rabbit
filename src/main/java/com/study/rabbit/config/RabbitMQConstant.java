@@ -11,4 +11,5 @@ public class RabbitMQConstant {
     public static final String DEAD_LETTER_EXCHANGE = "x-dead-letter-exchange";
     public static final String DEAD_EXCHANGE = "dead_exchange";
     public static final String DEFAULT_KEY = "default_key";
+    public static final String TTL_TIME = "x-message-ttl";
 }
